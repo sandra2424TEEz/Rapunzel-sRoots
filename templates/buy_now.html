@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center">Buy Now: {{ product.name }}</h2>
+    <div class="card mx-auto mt-4" style="width: 24rem;">
+        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+        <div class="card-body">
+            <p>{{ product.description }}</p>
+            <h4 class="text-success">Price: ${{ product.price }}</h4>
+            <button class="btn btn-primary">Proceed to Checkout</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

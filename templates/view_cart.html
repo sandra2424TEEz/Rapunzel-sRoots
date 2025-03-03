@@ -1,0 +1,124 @@
+{% comment %} <h1>Your Cart</h1>
+
+{% if cart_items %}
+    <ul>
+        {% for item in cart_items %}
+            <li>
+                <strong>Product:</strong> {{ item.product.name }} <br>
+                <strong>Quantity:</strong> {{ item.quantity }} <br>
+                <strong>Price:</strong> ${{ item.product.price|floatformat:2 }} <br>
+                <strong>Total:</strong> ${{ item.quantity|floatformat:2 }} x ${{ item.product.price|floatformat:2 }} <br>
+            </li>
+        {% endfor %}
+    </ul>
+    <p><strong>Total Price: ${{ total_price|floatformat:2 }}</strong></p>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %} {% endcomment %}
+{% comment %} <h2>Your Cart</h2>
+{% if cart_items %}
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.quantity|multiply:item.product.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Total Price: {{ total_price }}</h3>
+{% else %}
+    <p>{{ message }}</p>
+{% endif %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart - Rapunzel's Roots</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f9f9f9;
+    }
+    .cart-container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+    .empty-cart {
+      text-align: center;
+      padding: 40px;
+      color: #555;
+    }
+    .total-price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #333;
+    }
+    .checkout-btn {
+      background-color: #ff6600;
+      color: white;
+    }
+    .checkout-btn:hover {
+      background-color: #e55b00;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container cart-container">
+    <h2 class="text-center fw-bold mb-4">Your Cart</h2>
+
+    {% if cart_items %}
+    <table class="table table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart_items %}
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.quantity|multiply:item.product.price }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <p class="total-price">Total Price: ${{ total_price }}</p>
+      <a href="{% url 'home:checkout' %}" class="btn checkout-btn">Proceed to Checkout</a>
+    </div>
+
+    {% else %}
+    <p class="empty-cart">Your cart is empty. Start shopping now!</p>
+    {% endif %}
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

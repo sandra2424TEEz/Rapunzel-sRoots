@@ -1,0 +1,69 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Rapunzel's Roots</title>
+</head>
+<body>
+    <div class="welcome-message">
+        <h2>Welcome, {{ user_name }}!</h2>
+        <p>What are you looking for today?</p>
+        <form method="GET" action="{% url 'home:home_page' %}">
+            <input type="text" name="search" placeholder="Search for products..." value="{{ request.GET.search }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="product-list">
+        {% for product in products %}
+            <div class="product">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <p>${{ product.price }}</p>
+                <a href="{% url 'home:product_detail_view' product.id %}">View Details</a>
+                <a href="{% url 'home:add_to_cart' product.id %}">Add to Cart</a>
+                <a href="{% url 'home:buy_now' product.id %}">Buy Now</a>
+            </div>
+        {% empty %}
+            <p>No products available.</p>
+        {% endfor %}
+    </div>
+</body>
+</html> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Rapunzel's Roots</title>
+</head>
+<body>
+    <div class="welcome-message">
+        <h2>Welcome, {{ user_name }}!</h2>
+        <p>What are you looking for today?</p>
+        <form method="GET" action="{% url 'home:home_page' %}">
+            <input type="text" name="search" placeholder="Search for products..." value="{{ request.GET.search }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="product-list">
+        {% for product in products %}
+            <div class="product">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" />
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <p>${{ product.price }}</p>
+                <a href="{% url 'home:product_detail_view' product.id %}">View Details</a>
+                <a href="{% url 'home:add_to_cart' product.id %}">Add to Cart</a>
+                <a href="{% url 'home:buy_now' product.id %}">Buy Now</a>
+            </div>
+        {% empty %}
+            <p>No products available.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
+

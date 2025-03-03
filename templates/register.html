@@ -1,0 +1,363 @@
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Rapunzel's Roots</title>
+    
+    <style>
+        /* Basic form styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f7f7f7;
+        }
+
+        .register-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3d405b;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #e07a5f;
+            color: white;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3d405b;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+
+    <script>
+        // Username validation function
+        function validateUsername(input) {
+            const usernamePattern = /^[A-Za-z]+$/;
+            if (!usernamePattern.test(input.value)) {
+                alert("Username must contain only alphabets (no numbers or special characters).");
+                input.value = ""; // Clear the invalid input
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <div class="register-container">
+        <h1>Register</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required 
+                   onblur="validateUsername(this)" placeholder="Enter your username">
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+
+            <label for="password1">Password:</label>
+            <input type="password" id="password1" name="password1" required placeholder="Enter your password">
+
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" required placeholder="Confirm your password">
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+</body>
+</html> {% endcomment %}
+
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Rapunzel's Roots</title>
+
+    <style>
+        /* Basic form styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url("{% static 'images/hair-oil-register.jpg' %}") no-repeat center center fixed;
+            background-size: cover; /* Ensures the image covers the entire screen */
+            margin: 0;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.8); /* Light overlay to make form visible on the background */
+            padding: 30px; /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+            max-width: 350px; /* Reduced max-width */
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3d405b;
+            margin-bottom: 15px; /* Reduced margin */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 8px; /* Reduced margin */
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            padding: 8px; /* Reduced padding */
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #e07a5f;
+            color: white;
+            padding: 10px; /* Reduced padding */
+            margin-top: 15px; /* Reduced margin */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3d405b;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 10px; /* Reduced margin */
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+
+    <script>
+        // Username validation function
+        function validateUsername(input) {
+            const usernamePattern = /^[A-Za-z]+$/;
+            if (!usernamePattern.test(input.value)) {
+                alert("Username must contain only alphabets (no numbers or special characters).");
+                input.value = ""; // Clear the invalid input
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <div class="register-container">
+        <h1>Register</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required 
+                   onblur="validateUsername(this)" placeholder="Enter your username">
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email" autocomplete="off">
+
+            <label for="password1">Password:</label>
+            <input type="password" id="password1" name="password1" required placeholder="Enter your password" autocomplete="new-password">
+
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" required placeholder="Confirm your password" autocomplete="new-password">
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account? <a href="{% url 'home:login' %}">Login here</a></p>
+    </div>
+</body>
+</html> {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Rapunzel's Roots</title>
+
+    <style>
+        /* Basic form styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url("{% static 'images/oil.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #3d405b;
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 8px;
+        }
+
+        input, select {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #e07a5f;
+            color: white;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3d405b;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+
+    <script>
+        // Username validation function
+        function validateUsername(input) {
+            const usernamePattern = /^[A-Za-z]+$/;
+            if (!usernamePattern.test(input.value)) {
+                alert("Username must contain only alphabets (no numbers or special characters).");
+                input.value = ""; // Clear the invalid input
+            }
+        }
+
+        // Ensure a role is selected
+        function validateForm(event) {
+            const roleSelect = document.getElementById("role");
+            if (roleSelect.value === "") {
+                alert("Please select a role before registering.");
+                event.preventDefault();
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <div class="register-container">
+        <h1>Register</h1>
+        <form method="POST" onsubmit="validateForm(event)">
+            {% csrf_token %}
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required 
+                   onblur="validateUsername(this)" placeholder="Enter your username">
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email" autocomplete="off">
+
+            <label for="password1">Password:</label>
+            <input type="password" id="password1" name="password1" required placeholder="Enter your password" autocomplete="new-password">
+
+            <label for="password2">Confirm Password:</label>
+            <input type="password" id="password2" name="password2" required placeholder="Confirm your password" autocomplete="new-password">
+
+            <!-- Role selection dropdown -->
+            <label for="role">Select Role:</label>
+            <select id="role" name="role" required>
+                <option value="">-- Select Role --</option>
+                <option value="user">User</option>
+                <option value="brand">Shopkeeper</option>
+                <option value="admin">Admin</option>
+            </select>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account? <a href="{% url 'home:login' %}">Login here</a></p>
+    </div>
+</body>
+</html>

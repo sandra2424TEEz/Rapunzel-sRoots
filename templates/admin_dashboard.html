@@ -1,0 +1,17 @@
+<!-- templates/admin_dashboard.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Admin Dashboard</h2>
+    <p>Welcome, {{ user.username }}! You have access to the admin panel.</p>
+    
+    <!-- You can display more admin options here, like user management, site settings, etc. -->
+    <div class="dashboard-options">
+        <a href="{% url 'home:add_product' %}" class="btn btn-primary">Add Product</a>
+        <a href="{% url 'home:product_list' %}" class="btn btn-primary">View Products</a>
+        <a href="{% url 'home:register' %}" class="btn btn-primary">Manage Users</a>
+        <!-- Add other links relevant to admin tasks -->
+    </div>
+  </div>
+{% endblock %}

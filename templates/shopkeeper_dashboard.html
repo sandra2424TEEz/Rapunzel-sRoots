@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopkeeper Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .dashboard-container {
+            max-width: 1000px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .request-list {
+            margin-top: 30px;
+        }
+        .request-item {
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+        }
+        .request-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+        .request-details {
+            flex: 1;
+        }
+        .status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: white;
+            display: inline-block;
+        }
+        .approved {
+            background-color: green;
+        }
+        .pending {
+            background-color: orange;
+        }
+        .new-request-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 12px;
+            background-color: #ff9800;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .new-request-btn:hover {
+            background-color: #e68a00;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h2>Welcome to Your Shopkeeper Dashboard</h2>
+
+    {% if requests %}
+    <div class="request-list">
+        {% for request in requests %}
+        <div class="request-item">
+            <img src="{{ request.product_image.url|default:'/static/default-product.jpg' }}" alt="{{ request.product_name }}">
+            <div class="request-details">
+                <h3>{{ request.product_name }}</h3>
+                <p>{{ request.product_description }}</p>
+                <p><strong>Category:</strong> {{ request.product_category }}</p>
+                <p><strong>Price:</strong> &#8377;{{ request.product_price }}</p>
+                <p>
+                    <span class="status {% if request.approved == True %}approved{% else %}pending{% endif %}">
+                        {% if request.approved == True %}Approved ✅{% else %}Pending ⏳{% endif %}
+                    </span>
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p style="text-align: center;">You have not submitted any product requests yet.</p>
+    {% endif %}
+
+    <a href="{% url 'shopkeeper_request' %}" class="new-request-btn">+ New Product Request</a>
+</div>
+
+</body>
+</html>

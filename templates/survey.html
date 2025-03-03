@@ -1,0 +1,10 @@
+<form method="POST">
+    {% csrf_token %}
+    <h2>Select Your Product Preference:</h2>
+    {% for option in options %}
+        <label>
+            <input type="radio" name="preference" value="{{ option }}"> {{ option|title }}
+        </label><br>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>
