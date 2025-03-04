@@ -1,4 +1,4 @@
-{% load static %}
+{% comment %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +69,98 @@
                       {% endfor %}
                   </tbody>
                   
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <h4>Total Price: ${{ total_price }}</h4>
+                <a href="{% url 'home:checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+            </div>
+        {% else %}
+            <p>Your cart is empty. Add products to your cart to proceed.</p>
+        {% endif %}
+    </main>
+
+    <footer class="bg-dark text-white py-4 text-center mt-4">
+        <p class="mb-0">&copy; 2025 Rapunzel's Roots. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Rapunzel's Roots</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <header class="bg-light py-3 shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light container">
+            <a class="navbar-brand fw-bold" href="{% url 'home:index' %}">Rapunzel's Roots</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home:product_list' %}">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary" href="{% url 'home:register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-primary" href="{% url 'home:login' %}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    {% block messages %}
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endblock messages %}
+
+    <main class="container mt-4">
+        <h2>Your Cart</h2>
+
+        {% if cart_items %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for item in cart_items %}
+                          <tr>
+                              <td>{{ item.product.name }}</td>
+                              <td>{{ item.quantity }}</td>
+                              <td>${{ item.price }}</td>
+                              <td>${{ item.item_total }}</td>
+                              <td>
+                                  <a href="{% url 'home:remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Remove</a>
+                              </td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
                 </table>
             </div>
 

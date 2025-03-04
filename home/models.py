@@ -118,6 +118,52 @@ class UserProfile(models.Model):
     def set_preferences(self, preferences_list):
         self.preferences = ','.join(p.strip() for p in preferences_list if p.strip())
         self.save()
+# class Product(models.Model):
+#     CATEGORY_CHOICES = [
+#         ('dandruff', 'Dandruff Solutions'),
+#         ('hair_fall', 'Hair Fall Control'),
+#         ('volumizing', 'Volumizing Products'),
+#         ('nourishment', 'Nourishment Oils'),
+#     ]
+
+#     name = models.CharField(max_length=200)
+#     description = models.TextField()
+#     price = models.DecimalField(max_digits=10, decimal_places=2)
+#     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+#     image = models.ImageField(upload_to='products/images/')
+#     stock = models.PositiveIntegerField(default=10)
+
+#     def __str__(self):
+#         return self.name
+
+#     def is_in_stock(self):
+#         return self.stock > 0
+
+#     def update_stock(self, quantity):
+#         if quantity > self.stock:
+#             raise ValueError("Not enough stock available!")
+#         self.stock -= quantity
+#         self.save()
+
+
+# class CartItem(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     quantity = models.PositiveIntegerField(default=1)
+#     added_at = models.DateTimeField(default=now)
+
+#     def save(self, *args, **kwargs):
+#         if self.quantity > self.product.stock:
+#             raise ValueError("Not enough stock available!")
+#         self.product.update_stock(self.quantity)
+#         super().save(*args, **kwargs)
+
+#     def total_price(self):
+#         return self.quantity * self.product.price
+
+#     def __str__(self):
+#         return f'{self.product.name} - {self.quantity} item(s)'
+
 class Product(models.Model):
     CATEGORY_CHOICES = [
         ('dandruff', 'Dandruff Solutions'),
@@ -140,9 +186,15 @@ class Product(models.Model):
         return self.stock > 0
 
     def update_stock(self, quantity):
+        """Update stock only when purchasing, not when adding to cart."""
         if quantity > self.stock:
             raise ValueError("Not enough stock available!")
         self.stock -= quantity
+        self.save()
+
+    def restore_stock(self, quantity):
+        """Restore stock when an item is removed from the cart."""
+        self.stock += quantity
         self.save()
 
 
@@ -152,19 +204,16 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     added_at = models.DateTimeField(default=now)
 
-    def save(self, *args, **kwargs):
-        if self.quantity > self.product.stock:
-            raise ValueError("Not enough stock available!")
-        self.product.update_stock(self.quantity)
-        super().save(*args, **kwargs)
-
     def total_price(self):
         return self.quantity * self.product.price
 
     def __str__(self):
         return f'{self.product.name} - {self.quantity} item(s)'
 
-
+    def remove_from_cart(self):
+        """Restore stock when the cart item is removed."""
+        self.product.restore_stock(self.quantity)
+        self.delete()
 class ShopkeeperRequest(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=100)

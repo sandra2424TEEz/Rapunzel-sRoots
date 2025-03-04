@@ -503,8 +503,7 @@ def remove_from_cart(request, cart_item_id):
         messages.success(request, "Product removed from cart successfully.")
     else:
         messages.error(request, "Item not found in your cart.")
-
-    return redirect('cart_view')
+    return redirect('home:cart_view')
 def filter_products_by_category(request, category):
     products = Product.objects.filter(category=category)
     return render(request, 'products.html', {'products': products})
