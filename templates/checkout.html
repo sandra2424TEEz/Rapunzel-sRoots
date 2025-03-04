@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Checkout</title>
-</head>
-<body>
-    <h1>Checkout Page</h1>
-</body>
-</html>
+<h1>Checkout</h1>
+<p>Proceed with your payment here.</p>
+<form action="{% url 'home:payment_process' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Pay Now</button>
+</form>
